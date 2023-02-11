@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href='/staticFiles/main.css' />
+  </head>
+    <script nonce="undefined" src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <style>
+    body {
+      background-color: #3430a9;
+      font-family: 'Roboto', sans-serif;
+    }
+    .zc-body {
+      background-color: 'black';
+    }
+ 
+    .chart--container {
+      width: 500px;
+      height: 290px;
+    }
+ 
+    .zc-ref {
+      display: none;
+    }
+  </style>
+
+  <body>
+    <div class="body3">
+ 
+<img src="{{ user_image }}" alt="Italian Trulli" width="480" height="645">
+ 
+
+	
+	<!-- Physiognomy vector: <p>{{ user_physiognomy }}</p> -->
+	<div class="f4"> 
+	  <div id="myChart" class="chart--container">
+  </div>
+  <div class="text--container"><p id = "output--text"></p></div>
+  </div>
+  </div>
+  <script>
+    let chartConfig = {
+      type: 'radar',
+      plot: {
+        aspect: 'area',
+        animation: {
+          effect: 3,
+          sequence: 1,
+          speed: 700,
+        },
+      },
+      scaleV: {
+        values: '0:100:10',
+		guide: {
+          lineWidth: 0,
+          items: [{
+              alpha: 0.75,
+              backgroundColor: 'red'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ff1a1a'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ff3333'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ff4d4d'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ff6666'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ff8080'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ff9999'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ffb3b3'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ffcccc'
+            },
+            {
+			  alpha: 0.75,
+              backgroundColor: '#ffe6e6'
+            }
+          ]
+        }
+      },
+      scaleK: {
+        values: '0:4:1',
+        labels: ['Metal', 'Wood', 'Water', 'Fire', 'Earth'],
+        guide: {
+          lineColor: '#607D8B',
+          lineStyle: 'solid',
+        },
+        item: {
+          backgroundColor: 'white',
+          borderColor: '#aeaeae',
+          borderRadius: '10px',
+          borderWidth: '1px',
+          fontColor: '#607D8B',
+          padding: '5 10',
+        },
+        refLine: {
+          lineColor: '#c10000',
+        },
+        tick: {
+          lineColor: '#59869c',
+          lineWidth: '2px',
+          lineStyle: 'dotted',
+          size: 20,
+        },
+      },
+      series: [{
+          values: [{{ user_physiognomy }}[0]*100, {{ user_physiognomy }}[1]*100, 0, {{ user_physiognomy }}[2]*100, {{ user_physiognomy }}[3]*100],
+        },
+      ],
+    };
+ 
+    zingchart.render({
+      id: 'myChart',
+      data: chartConfig,
+      height: '100%',
+      width: '100%',
+    });
+  </script>
+  <script>
+    function findMax(numbers) {
+      let max = numbers[0];
+      for (let i = 1; i < numbers.length; i++) {
+        if (numbers[i] > max) {
+          max = numbers[i];
+        }
+      }
+      return max;
+    }
+  
+    let numbers = [{{ user_physiognomy }}[0]*100, {{ user_physiognomy }}[1]*100, 0, {{ user_physiognomy }}[2]*100, {{ user_physiognomy }}[3]*100 ];
+    let max = findMax(numbers);
+  
+    let text;
+    switch(max) {
+      case numbers[0]:
+        text = "<center><b>METAL</b></center><br><ul><li>Practice self-discipline and focus to achieve your goals.</li><li>Cultivate inner strength and resilience to handle challenges and setbacks.</li> <li>Let go of attachments and embrace change to find balance and growth.</li> </ul>"
+      case numbers[1]:
+        text = "<center><b>WOOD</b></center><br><ul><li>Cultivate growth and expansion in all aspects of your life.</li> <li>Find balance between work and play to maintain energy and creativity.</li> <li>Nurture your relationships and seek support from others.</li> </ul>";
+        break;
+      case numbers[2]:
+        text = "<center><b>WATER</b></center><br><ul><li>Flow with life's changes and adapt to new situations.</li> <li>Trust your instincts and inner wisdom to guide you.</li> <li>Cultivate a calm and peaceful mind to better handle life's ups and downs.</li> </ul>";
+        break;
+      case numbers[3]:
+        text = "<center><b>FIRE</b></center><br><ul><li>Embrace change and take bold action to make things happen.</li> <li>Cultivate passion and enthusiasm for life.</li>Take care of your physical and mental health to maintain energy and vitality.<li> </li> </ul>";
+        break;
+      case numbers[4]:
+        text = "<center><b>EARTH</b></center><br><ul><li>Find stability and balance in life by focusing on practical goals and needs.</li> <li>Cultivate a sense of security and comfort in your daily routines.</li> <li>Practice gratitude and stay grounded in the present moment.</li></ul>"
+        break;
+      default:
+        text = "";
+    }
+    
+    document.getElementById("output--text").innerHTML = text;
+  </script>
+    </div>
+    </body>
+</html>

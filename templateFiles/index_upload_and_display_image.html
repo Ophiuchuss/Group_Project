@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<title>Website</title>
+<link rel="stylesheet" href='../staticFiles/main.css' />
+</head>
+<body>
+<header>
+<!-- <a href="#" class="logo">Logo</a> -->
+<ul>
+<li><a href="#" class="active">Home</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Work</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+</header>
+<section>
+  <img src="../staticFiles/giphy.gif" id="giphy-embed">
+  <h2 id="text">Facial Physiognomy</h2>
+  <a href="#section3" id="btn">Explore Now</a>
+  <script>
+document.getElementById("btn").addEventListener("click", function() {
+  document.querySelector(".section3").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+</script>
+</section>
+
+<section class="section3">
+  <h1 style="font-size: 3.0vw;">LET US ANALYZE YOUR FACE</h1>
+    <form method="POST" enctype="multipart/form-data" action="/">
+        <label for="myFile" class="custom-file-label">Upload your potrait image</label>
+        <input type="file" id="myFile" name="uploaded-file" class="custom-file-input" accept=".jpg" onchange="loadFile(event)" >
+        <script>
+          const input = document.querySelector('.custom-file-input');
+          const label = document.querySelector('.custom-file-label');
+          let fileselected = false
+
+        
+          input.addEventListener('change', function (e) {
+            const fileName = e.target.value.split('\\').pop();
+            label.innerHTML = fileName;
+            fileselected = true
+          });
+        
+          label.addEventListener('click', function () {
+            if (!fileSelected) {
+              input.click();
+            }
+          });
+        </script>
+        <input id="submit" name ="submit" type="submit" value="Submit">
+    </form>
+</section>
+
+<!-- <script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+  };
+</script> -->
+
+</body>
+</html>
